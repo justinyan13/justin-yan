@@ -16,9 +16,6 @@ export function InputArea({ onSendMessage }: InputAreaProps) {
         if (!input.trim()) return;
         onSendMessage(input);
         setInput("");
-        if (textareaRef.current) {
-            textareaRef.current.style.height = "auto";
-        }
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -30,9 +27,6 @@ export function InputArea({ onSendMessage }: InputAreaProps) {
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setInput(e.target.value);
-        // Auto-resize
-        e.target.style.height = "auto";
-        e.target.style.height = `${Math.min(e.target.scrollHeight, 120)}px`;
     };
 
     return (
@@ -48,16 +42,15 @@ export function InputArea({ onSendMessage }: InputAreaProps) {
                         value={input}
                         onChange={handleChange}
                         onKeyDown={handleKeyDown}
-                        placeholder="iMessage"
                         rows={1}
-                        className="w-full bg-[#1C1C1E] text-white rounded-[20px] px-4 py-2 pr-10 focus:outline-none resize-none min-h-[36px] max-h-[120px] leading-6 border border-white/10"
+                        className="w-full bg-[#1C1C1E] text-white rounded-[20px] px-4 py-2.5 pr-14 focus:outline-none resize-none h-[36px] leading-5 overflow-y-hidden overflow-x-auto whitespace-nowrap"
                     />
                     {input.trim().length > 0 && (
                         <motion.button
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             onClick={handleSend}
-                            className="absolute right-1 bottom-1 p-1.5 rounded-full bg-[#007AFF] text-white"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-[#007AFF] text-white"
                         >
                             <ArrowUp size={16} strokeWidth={3} />
                         </motion.button>
