@@ -54,7 +54,7 @@ export function ChatInterface() {
             <Header />
 
             <div
-                className="flex-1 overflow-y-auto pt-40 pb-24 px-4 space-y-4 scrollbar-hide"
+                className="flex-1 overflow-y-auto pt-42 pb-24 px-4 space-y-4 scrollbar-hide"
                 style={{
                     maskImage: "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, black 160px, black 100%)",
                     WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, black 160px, black 100%)"
