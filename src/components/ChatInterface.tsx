@@ -7,19 +7,32 @@ import { InputArea } from "./InputArea";
 import { TypingIndicator } from "./TypingIndicator";
 import { Message } from "@/lib/types";
 
-const INITIAL_MESSAGES: Message[] = [
-    {
-        id: "1",
-        text: "Good afternoon! 😊",
-        sender: "ai",
-        timestamp: new Date(),
-    },
-];
+const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good Morning! ☀️";
+    if (hour < 18) return "Good Afternoon! 🍱";
+    return "Good Evening! 🌚";
+};
 
 export function ChatInterface() {
-    const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
+    const [messages, setMessages] = useState<Message[]>([]);
     const [isTyping, setIsTyping] = useState(false);
+    const [currentTime, setCurrentTime] = useState<string>("");
     const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        // Set initial greeting and time on mount to avoid hydration mismatch
+        const greeting = getGreeting();
+        setMessages([
+            {
+                id: "1",
+                text: greeting,
+                sender: "ai",
+                timestamp: new Date(),
+            },
+        ]);
+        setCurrentTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }));
+    }, []);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -108,7 +121,7 @@ export function ChatInterface() {
                 }}
             >
                 <div className="text-center text-[#8E8E93] text-[15px] font-medium mb-2">
-                    Today {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}
+                    Today {currentTime}
                 </div>
 
                 {messages.map((msg, index) => (
