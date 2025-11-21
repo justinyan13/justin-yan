@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { stripMarkdown } from "@/lib/utils";
 
+// Chat API route - handles Gemini AI integration
 // The client gets the API key from the environment variable `GEMINI_API_KEY`
 const ai = new GoogleGenAI({});
 
