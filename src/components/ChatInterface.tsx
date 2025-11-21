@@ -37,16 +37,57 @@ export function ChatInterface() {
 
         setMessages((prev) => [...prev, userMessage]);
 
-        // Mock AI response
-        setTimeout(() => {
+        try {
+            // Convert message history to AI format, excluding the initial AI greeting
+            // Google AI requires history to start with a user message
+            const conversationHistory = messages
+                .filter((msg) => msg.id !== "1") // Exclude initial greeting
+                .map((msg) => ({
+                    role: msg.sender === "user" ? "user" : "model",
+                    parts: msg.text,
+                }));
+
+            // Call API route instead of importing AI module directly
+            const response = await fetch("/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    message: text,
+                    history: conversationHistory,
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.error || `HTTP ${response.status}: Failed to get AI response`);
+            }
+
+            const data = await response.json();
+            
+            if (data.error) {
+                throw new Error(data.error);
+            }
+
             const aiMessage: Message = {
                 id: (Date.now() + 1).toString(),
-                text: "I'm currently a mock AI. I'll be connected to real logic soon! But that's a great question.",
+                text: data.response,
                 sender: "ai",
                 timestamp: new Date(),
             };
             setMessages((prev) => [...prev, aiMessage]);
-        }, 1000);
+        } catch (error: any) {
+            console.error("Error getting AI response:", error);
+            const errorText = error?.message || "Sorry, I'm having trouble connecting right now. Please try again.";
+            const errorMessage: Message = {
+                id: (Date.now() + 1).toString(),
+                text: errorText,
+                sender: "ai",
+                timestamp: new Date(),
+            };
+            setMessages((prev) => [...prev, errorMessage]);
+        }
     };
 
     return (
