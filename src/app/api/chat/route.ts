@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { stripMarkdown } from "@/lib/utils";
+import { SYSTEM_INSTRUCTION } from "@/lib/personal-data";
 
 // Chat API route - handles Gemini AI integration
 // The client gets the API key from the environment variable `GEMINI_API_KEY`
@@ -20,24 +21,24 @@ export async function POST(request: NextRequest) {
         // Build contents for the API
         // If there's history, build an array; otherwise use simple string format
         let contents: any;
-        
+
         if (history && history.length > 0) {
             // Build conversation history array
             const contentsArray: any[] = [];
-            
+
             history.forEach((msg: any) => {
                 contentsArray.push({
                     role: msg.role === "user" ? "user" : "model",
                     parts: [{ text: msg.parts }],
                 });
             });
-            
+
             // Add the new user message
             contentsArray.push({
                 role: "user",
                 parts: [{ text: message }],
             });
-            
+
             contents = contentsArray;
         } else {
             // Simple case: just the message as a string
@@ -48,10 +49,13 @@ export async function POST(request: NextRequest) {
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: contents,
+            config: {
+                systemInstruction: SYSTEM_INSTRUCTION,
+            },
         });
 
         let text = response.text || "";
-        
+
         // Strip markdown formatting for clean iMessage-style display
         text = stripMarkdown(text);
 
