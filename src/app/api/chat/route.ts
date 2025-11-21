@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
             contents = message;
         }
 
-        // Generate response using the new API
+        // Generate response using Gemini 2.5 Flash model
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: contents,
