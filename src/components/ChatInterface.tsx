@@ -91,14 +91,15 @@ export function ChatInterface() {
     };
 
     return (
-        <div className="flex flex-col h-full bg-black text-white font-sans relative overflow-hidden">
+        <div className="flex flex-col h-full bg-black text-white font-sans relative overflow-hidden safe-area-inset">
             <Header />
 
             <div
-                className="flex-1 overflow-y-auto pt-42 pb-24 px-4 space-y-4 scrollbar-hide"
+                className="flex-1 overflow-y-auto pt-[168px] pb-24 md:pt-42 px-3 md:px-4 space-y-4 scrollbar-hide"
                 style={{
                     maskImage: "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, black 160px, black 100%)",
-                    WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, black 160px, black 100%)"
+                    WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, black 160px, black 100%)",
+                    paddingBottom: "calc(env(safe-area-inset-bottom) + 6rem)"
                 }}
             >
                 <div className="text-center text-[#8E8E93] text-[15px] font-medium mb-2">

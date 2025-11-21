@@ -5,7 +5,12 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export function Header() {
     return (
-        <div className="absolute top-0 left-0 right-0 z-10 flex flex-col items-center pt-12 pb-4 pointer-events-none">
+        <div 
+            className="absolute top-0 left-0 right-0 z-10 flex flex-col items-center pt-12 pb-4 pointer-events-none"
+            style={{
+                paddingTop: "calc(env(safe-area-inset-top) + 3rem)"
+            }}
+        >
             {/* Gradient Blur Background */}
             <div
                 className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-transparent backdrop-blur-xl -z-10"
@@ -15,7 +20,12 @@ export function Header() {
                 }}
             />
 
-            <div className="absolute left-4 top-12 p-2 rounded-full bg-[#2C2C2E] text-[#007AFF] pointer-events-auto">
+            <div 
+                className="absolute left-3 md:left-4 top-12 p-2 rounded-full bg-[#2C2C2E] text-[#007AFF] pointer-events-auto touch-manipulation"
+                style={{
+                    top: "calc(env(safe-area-inset-top) + 3rem)"
+                }}
+            >
                 <ChevronLeft size={24} />
             </div>
 

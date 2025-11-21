@@ -24,7 +24,7 @@ export function MessageBubble({ message, isLast }: MessageBubbleProps) {
         >
             <div
                 className={cn(
-                    "max-w-[75%] px-5 py-2.5 rounded-[22px] text-[17px] leading-snug relative break-words",
+                    "max-w-[85%] md:max-w-[75%] px-4 md:px-5 py-2 md:py-2.5 rounded-[22px] text-[15px] md:text-[17px] leading-snug relative break-words",
                     isUser
                         ? "bg-[var(--bubble-user)] text-white rounded-br-md"
                         : "bg-[#3A3A3C] text-white rounded-bl-md"
