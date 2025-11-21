@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Header } from "./Header";
 import { MessageBubble } from "./MessageBubble";
 import { InputArea } from "./InputArea";
+import { TypingIndicator } from "./TypingIndicator";
 import { Message } from "@/lib/types";
 
 const INITIAL_MESSAGES: Message[] = [
@@ -17,6 +18,7 @@ const INITIAL_MESSAGES: Message[] = [
 
 export function ChatInterface() {
     const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
+    const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
@@ -25,7 +27,7 @@ export function ChatInterface() {
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages]);
+    }, [messages, isTyping]);
 
     const handleSendMessage = async (text: string) => {
         const userMessage: Message = {
@@ -36,6 +38,7 @@ export function ChatInterface() {
         };
 
         setMessages((prev) => [...prev, userMessage]);
+        setIsTyping(true);
 
         try {
             // Convert message history to AI format, excluding the initial AI greeting
@@ -65,7 +68,7 @@ export function ChatInterface() {
             }
 
             const data = await response.json();
-            
+
             if (data.error) {
                 throw new Error(data.error);
             }
@@ -76,6 +79,7 @@ export function ChatInterface() {
                 sender: "ai",
                 timestamp: new Date(),
             };
+            setIsTyping(false);
             setMessages((prev) => [...prev, aiMessage]);
         } catch (error: any) {
             console.error("Error getting AI response:", error);
@@ -86,6 +90,7 @@ export function ChatInterface() {
                 sender: "ai",
                 timestamp: new Date(),
             };
+            setIsTyping(false);
             setMessages((prev) => [...prev, errorMessage]);
         }
     };
@@ -113,6 +118,7 @@ export function ChatInterface() {
                         isLast={index === messages.length - 1}
                     />
                 ))}
+                {isTyping && <TypingIndicator />}
                 <div ref={messagesEndRef} />
             </div>
 
