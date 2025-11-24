@@ -9,24 +9,32 @@ export const PERSONAL_DATA = {
     },
     workExperience: [
         {
-            role: "Product Manager Intern",
+            role: "Incoming PM",
+            company: "Datadog",
+            location: "New York, NY",
+            description: "Incoming Product Manager."
+        },
+        {
+            role: "Incoming PM",
+            company: "Microsoft",
+            location: "Seattle, WA",
+            description: "Incoming Product Manager."
+        },
+        {
+            role: "PM Intern",
             company: "1Password",
             description: "Led development of an AI-powered in-browser notification manager to guide users in selecting secure authentication methods. Launched a feature extending device security checks to browsers for IT admins."
         },
         {
             role: "TPM Intern",
             company: "Tesla",
+            location: "San Francisco, California",
             description: "Coordinated 10+ global vehicle rollouts reaching millions of cars on the Software Release team. Built internal tools to improve visibility behind release delays."
         },
         {
             role: "Product & Operations Intern",
             company: "Wealthsimple",
             description: "Automated workflows and built KPI systems. Ran 15+ user interviews to shape an improved customer support experience for the core Crypto Product."
-        },
-        {
-            role: "Data Engineer",
-            company: "Anheuser-Busch",
-            description: "Led the creation of an internal data import service."
         }
     ],
     extracurriculars: [
